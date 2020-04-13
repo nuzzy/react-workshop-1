@@ -87,6 +87,8 @@ class App extends React.Component {
         this.setState({
             movies: updateMovies
         });
+
+        this.deleteMovieFromWillWatch(movie);
     };
 
     addMovieToWillWatch = movie => {
