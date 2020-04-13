@@ -2,6 +2,7 @@ import React from "react";
 // import { moviesData } from "../moviesData";
 import MovieItem from "./MovieItem";
 import MovieTabs from "./MovieTabs";
+import MoviePagination from "./MoviePagination";
 import { API_URL, API_KEY_3, API_ENDPOINT_DISCOVERY_MOVIE } from "../utils/api";
 
 // UI = fn(state, props)
@@ -18,40 +19,71 @@ class App extends React.Component {
             sortBy: {
                 field: "popularity",
                 order: "desc"
+            },
+            pagination: {
+                page: 1,
+                pagesTotal: 500,
+                moviesTotal: 10000
             }
         };
     }
 
     componentDidMount() {
-        console.log("DidMount");
-        this.fetchMovieData(this.state.sortBy);
+        this.fetchMovieData(this.state.sortBy, this.state.pagination);
     }
 
-    fetchMovieData = sortBy => {
+    componentDidUpdate(prevProps, prevState) {
+        if (this.isMovieFilterChanged(prevState, this.state)) {
+            this.fetchMovieData(this.state.sortBy, this.state.pagination);
+        }
+    }
+
+    isMovieFilterChanged = (prevState, currentState) => {
+        const {
+            sortBy: { field: currentSortField, order: currentSortOrder },
+            pagination: { page: currentPage }
+        } = currentState;
+        const {
+            sortBy: { field: prevSortField, order: prevSortOrder },
+            pagination: { page: prevPage }
+        } = prevState;
+
+        if (
+            prevSortField !== currentSortField ||
+            prevSortOrder !== currentSortOrder ||
+            prevPage !== currentPage
+        ) {
+            return true;
+        }
+
+        return false;
+    };
+
+    fetchMovieData = (sortBy, pagination) => {
         const { field, order } = sortBy;
-        const url = `${API_URL}${API_ENDPOINT_DISCOVERY_MOVIE}?api_key=${API_KEY_3}&sort_by=${field}.${order}`;
+        const { page } = pagination;
+        const url = `${API_URL}${API_ENDPOINT_DISCOVERY_MOVIE}?api_key=${API_KEY_3}&sort_by=${field}.${order}&page=${page}`;
         console.log(url);
 
         fetch(url)
             .then(Response => Response.json())
             .then(moviesData =>
                 this.setState({
-                    movies: moviesData.results
+                    movies: moviesData.results,
+                    pagination: {
+                        page: moviesData.page,
+                        pagesTotal: moviesData.total_pages,
+                        moviesTotal: moviesData.total_results
+                    }
                 })
             );
     };
 
-    componentDidUpdate() {
-        console.log("DidUpdate");
-    }
-
     deleteMovie = movie => {
-        console.log(movie.id);
         const updateMovies = this.state.movies.filter(
             item => item.id !== movie.id
         );
 
-        // this.state.movies = updateMovies;
         this.setState({
             movies: updateMovies
         });
@@ -77,28 +109,37 @@ class App extends React.Component {
     };
 
     sortMoviesBy = sortBy => {
-        console.log("SORT-BY:", sortBy);
-        const isOrderTheSame = sortBy.field === this.state.sortBy.field;
-        const currentOrder = this.state.sortBy.order;
-        const order = isOrderTheSame
-            ? currentOrder === "desc"
-                ? "asc"
-                : "desc"
-            : currentOrder;
-        const updatedSortBy = {
-            field: sortBy.field,
-            order: order
-        };
+        this.setState({
+            sortBy: {
+                field: sortBy.field,
+                order: this.calculateSortOrder(this.state.sortBy, sortBy)
+            }
+        });
+    };
+
+    calculateSortOrder = (currentSortBy, sortBy) => {
+        if (sortBy.field !== currentSortBy.field) {
+            return currentSortBy.order;
+        }
+
+        return currentSortBy.order === "desc" ? "asc" : "desc";
+    };
+
+    paginateMovies = page => {
+        const { pagesTotal, moviesTotal } = this.state.pagination;
 
         this.setState({
-            sortBy: updatedSortBy
+            pagination: {
+                page: page,
+                pagesTotal: pagesTotal,
+                moviesTotal: moviesTotal
+            }
         });
-
-        this.fetchMovieData(updatedSortBy);
     };
 
     render() {
         console.log("render");
+
         return (
             <div className="container">
                 <div className="row mt-4">
@@ -108,6 +149,16 @@ class App extends React.Component {
                                 <MovieTabs
                                     sortBy={this.state.sortBy}
                                     sortMoviesBy={this.sortMoviesBy}
+                                />
+                            </div>
+                        </div>
+                        <div className="row mb-4">
+                            <div className="col-12">
+                                <MoviePagination
+                                    type="micro"
+                                    showMoviesTotal={true}
+                                    pagination={this.state.pagination}
+                                    paginateMovies={this.paginateMovies}
                                 />
                             </div>
                         </div>
@@ -128,6 +179,15 @@ class App extends React.Component {
                                     </div>
                                 );
                             })}
+                        </div>
+                        <div className="row mb-4">
+                            <div className="col-12">
+                                <MoviePagination
+                                    type="full"
+                                    pagination={this.state.pagination}
+                                    paginateMovies={this.paginateMovies}
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className="col-3">

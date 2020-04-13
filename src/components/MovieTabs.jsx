@@ -1,5 +1,4 @@
 import React from "react";
-// var classNames = require("classnames");
 import classNames from "classnames";
 
 const MovieTabs = props => {
