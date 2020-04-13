@@ -24,12 +24,12 @@ const MovieTabs = props => {
         <ul className="tabs nav nav-pills">
             <li className="nav-item" onClick={handleSortMoviesBy("popularity")}>
                 <div className={getListItemClassName("popularity")}>
-                    Popularity {order}
+                    Popularity {order === "desc" ? `\u2193` : `\u2191`}
                 </div>
             </li>
             <li className="nav-item" onClick={handleSortMoviesBy("revenue")}>
                 <div className={getListItemClassName("revenue")}>
-                    Revenue {order}
+                    Revenue {order === "desc" ? `\u2193` : `\u2191`}
                 </div>
             </li>
             <li
@@ -37,7 +37,7 @@ const MovieTabs = props => {
                 onClick={handleSortMoviesBy("vote_average")}
             >
                 <div className={getListItemClassName("vote_average")}>
-                    Vote Average {order}
+                    Vote Average {order === "desc" ? `\u2193` : `\u2191`}
                 </div>
             </li>
         </ul>
