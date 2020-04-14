@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/react-workshop-1/static/css/main.46f619ec.chunk.css",
+    "main.js": "/react-workshop-1/static/js/main.8b4864d8.chunk.js",
+    "main.js.map": "/react-workshop-1/static/js/main.8b4864d8.chunk.js.map",
+    "runtime~main.js": "/react-workshop-1/static/js/runtime~main.d72951a7.js",
+    "runtime~main.js.map": "/react-workshop-1/static/js/runtime~main.d72951a7.js.map",
+    "static/css/2.0624914a.chunk.css": "/react-workshop-1/static/css/2.0624914a.chunk.css",
+    "static/js/2.bdd99ebb.chunk.js": "/react-workshop-1/static/js/2.bdd99ebb.chunk.js",
+    "static/js/2.bdd99ebb.chunk.js.map": "/react-workshop-1/static/js/2.bdd99ebb.chunk.js.map",
+    "index.html": "/react-workshop-1/index.html",
+    "precache-manifest.91bbbd41b5e7e38a08bce65c96a280b1.js": "/react-workshop-1/precache-manifest.91bbbd41b5e7e38a08bce65c96a280b1.js",
+    "service-worker.js": "/react-workshop-1/service-worker.js",
+    "static/css/2.0624914a.chunk.css.map": "/react-workshop-1/static/css/2.0624914a.chunk.css.map",
+    "static/css/main.46f619ec.chunk.css.map": "/react-workshop-1/static/css/main.46f619ec.chunk.css.map"
+  }
+}

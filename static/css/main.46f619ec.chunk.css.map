@@ -1,0 +1,1 @@
+{"version":3,"sources":["/mnt/c/projects/react-workshop-1/src/stylesheets/index.scss"],"names":[],"mappings":"AAAA,KACE,kBAAmB,CAGrB,UACE,cAAe,CADjB,gBAII,aAAc","file":"main.46f619ec.chunk.css","sourcesContent":["body {\n  background: #f9f9f9;\n}\n\n.nav-link {\n  cursor: pointer;\n\n  &:hover {\n    color: #007bff;\n  }\n}\n"]}
