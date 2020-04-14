@@ -12,3 +12,10 @@ GET  https://api.themoviedb.org/3/movie/${type}?api_key=${API_KEY_3}&language=en
 ```
 https://image.tmdb.org/t/p/w500${path}
 ```
+
+
+## Deployed APP
+
+```
+https://nuzzy.github.io/react-workshop-1/
+```
